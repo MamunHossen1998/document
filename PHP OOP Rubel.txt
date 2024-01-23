@@ -1,0 +1,342 @@
+----------------------------
+কম্পিউটার প্রোগ্রাম লেখার পদ্ধতি কি কি ?
+----------------------------
+কম্পিউটার প্রোগ্রাম দুই ভাবে লেখা যায়। 
+1) Object Oriented Programming.
+2) Procedural Programming.
+
+----------------------------------- 
+Procedural Programming কি  ?
+-----------------------------------
+Procedural Programming যা ডেটার উপর কাজ করে,অন্যদিকে Object Oriented Programming যা ডেটা এবং ফাংশন উভয়ই উপর কাজ করে। Procedural programming এর তুলনায় Object Oriented Programming-এর বেশ কিছু সুবিধা রয়েছে:
+
+1) OOP execute করা সহজ  । 
+2) OOP প্রোগ্রামিং এর জন্য একটি clear structure provide করে  । 
+3) OOP তে coding স্ট্যান্ডার্ড বজায় রাখা, পরিবর্তন করা এবং ডিবাগ করা সহজ  ।
+4) OOP তে  কম কোড এবং  সম্পূর্ণ পুনঃব্যবহারযোগ্য অ্যাপ্লিকেশন তৈরি করা সম্ভব ।
+
+// Procedural programming example
+function calculateCircleArea($radius) {
+    return 3.14 * $radius * $radius;
+}
+// Calculate and display the areas
+$circleArea = calculateCircleArea(5);
+echo "Circle Area: " . $circleArea . "\n";
+
+-----------------------------------
+OOP কি  ?
+-----------------------------------
+OOP হলো   Object Oriented Programming. আমাদের চার পাশে যা কিছু দেখি তা সবই  Object বা বস্তু । Class হচ্ছে  object এর replica (অবিকল প্রতিরুপ) বা blueprint (নীলনকশা) । Class এবং object এর concept কে  কাজে লাগিয়ে যে programming করা হয় তাকে  Object Oriented Programming বলে । 
+
+Object Oriented Programming তিনটি concept এর উপর প্রতিষ্ঠিত:
+
+1) Encapsulation-অর্থ হলো  সব কিছু encapsulated অবস্থায় রাখা  । অনেকটা ক্যাপসুল মতো, যেভাবে একটা capsule বাহিরে  আবরণ দিয়ে  আটকানো থাকে । একই ভাবে OOP তে  একটা class এর  মধ্যে সব কিছু encapsulated অবস্থায় থাকে ।  এনক্যাপসুলেশন ডেটা hidden করে এবং  ক্লাসের বাইরে থেকে ক্লাসের property গুলোকে সরাসরি অ্যাক্সেস prevention করে। এনক্যাপসুলেশনের মাধ্যমে একটি class এর internal state কে control করা যায়  । এখানে hidden বলতে  access modifier ব্যবহার করে data কে control করানো  বুঝানো হয়েছে। 
+
+2) Inheritance অর্থ হলো  উত্তরাধিকার ।  যখন  একটি  class(parent) এর  বৈশিষ্ট্য (methods & property) inherit করে অন্য class(child) এ ব্যবহার করা হয় তাকে  Inheritance বলে ।  Inherit করা জন্য extends keyword ব্যবহার করে । 
+
+PHP তে  তিন ধরণের inheritance রয়েছে:
+-----------------------------------
+!)  Single Inheritance: যখন  একটি child class শুধুমাত্র একটি parent class কে inherit করে তাকে Single Inheritance বলে । 
+
+!!) Multiple Inheritance: যখন  একটি child class একাধিক parent class কে inherit করে  তাকে  Multiple Inheritance বলে । 
+    PHP তে multiple inheritance সাপোর্ট করে না । Multiple inheritance এর সীমাবদ্ধতা দূর করার  trait ব্যবহার করা হয় । 
+    Example: 
+	trait TraitA {// Properties and methods of TraitA}
+	trait TraitB {// Properties and methods of TraitB}
+	class MyClass {
+    	    use TraitA, TraitB;
+	}	
+
+!!!) Multilevel Inheritance: ধরি A, B, C তিন টা ক্লাস , যদি B ক্লাস A কে এবং  C ক্লাস B কে inherit করে তাকে  Multilevel Inheritance বলে ।
+     Example:
+	class A{// Properties and methods of A}
+	class B extends A{// Properties and methods of B}
+	class C extends B{// Properties and methods of C}
+
+3) Polymorphism – বহুরূপি । অর্থাৎ একই অবজেক্ট  বহুরূপে ব্যবহার করা যায়  ।  দুটি ধরণের পলিমরফিজম রয়েছে :
+                
+!)  Method Overriding: যখন কোনো parent class এবং  child class মেথড এর   name same থাকে  তাকে Method Overriding বলে  । এক্ষেত্ৰ child class method এর  priority বেশি। PHP মেথড ওভাররাইডিং support করে। 
+
+!!) Method Overloading: যখন একই নামের একাধিক method এ  ভিন্ন ভিন্ন প্যারামিটার  ব্যবহার করা হয় তাকে Method Overloading বলে । PHP মেথড ওভারলোডিং সমর্থন করে, তবে অন্যান্য language এর মত  ওভারলোডিং সমর্থন করে না (যেমন, java বা C++)।  PHP-তে, magic method __call বা __callStatic মেথড ব্যবহার করে method overloading করা হয়।
+
+class Calculator {
+    // Magic method for method overloading
+    public function __call($name, $arguments) {
+        if ($name === 'multiply') {
+            if (count($arguments) === 2) {
+                return $this->multiplyTwo($arguments[0], $arguments[1]);
+            } elseif (count($arguments) === 3) {
+                return $this->multiplyThree($arguments[0], $arguments[1], $arguments[2]);
+            }
+        }
+        throw new \BadMethodCallException("Method '$name' not found.");
+    }
+}
+$calculator = new Calculator();
+echo $calculator->add(5, 3) . PHP_EOL;            // Output: 8
+echo $calculator->multiply(2, 3) . PHP_EOL;       // Output: 6
+echo $calculator->multiply(2, 3, 4) . PHP_EOL;    // Output: 24
+
+-----------------------------------
+PHP তে কয় ধরনের Access Modifiers আছে ?
+-----------------------------------
+তিনটি ধরনের Access Modifier আছে: 
+
+Public: Class এর মধ্যে যে সকল  method, property, constant কে class এর বাহিরে এবং  child class এ  access দিতে চাইলে  public declare করতে হয়।
+
+Private: Class এর মধ্যে যে সকল  method, property, constant কে  শুধুমাত্র  ঐ class মধ্যে সীমাবদ্ধ রাখতে চাইলে private declare করতে হয়। Getter এবং Setter method ব্যবহার করে private property এর  value get এবং  set করা যায় । 
+
+Protected: Class এর মধ্যে যে সকল  method, property, constant কে  শুধুমাত্র  ঐ class এবং তার child class এর মধ্যে ব্যবহার সীমাবদ্ধ রাখতে চাইলে protected declare করতে হয় । Class এর বাহির object create করে access করা যায় না।
+
+This: $this হলো  pseudo-variable, এটি current class এর object কে ধারণ করে । Class এর মধ্যে যে কোনো non-static method এবং  property কে class এর মধ্যে ব্যবহার করতে চাইলে  $this ব্যবহার করতে হয়  ।
+
+Static: Class এর মধ্যে যে সকল method, property কে   object create ছাড়া সরাসরি class দিয়ে access করার জন্য  static ব্যবহার করা হয় ।  Static method, static property এবং constant কে class এর ভিতরে অথবা বাহিরে ব্যবহার করার জন্য Scope resolution operator(::) ব্যবহার করা হয় ।   Static method শুধু মাত্র static property বা  constant কে করতে call করতে পারবে  ।  
+
+Self & Parent: self keyword current class কে  এবং parent keyword current child class এর  parent class কে represent করে । Self এবং  parent keyword দিয়ে  value set করা যায় না  ।  Static এবং non-static method এবং property কে call করতে পারবে  ।  
+Example: 
+------------------
+self::MY_CONSTANT;   self::$myProperty;   self::myMethod();  
+parent::MY_CONSTANT; parent::$myProperty; parent::myMethod(); 
+
+Method:   Class এর মধ্যে অবস্থিত function গুলিকে  method বলা হয়।  
+Property: Class এর মধ্যে অবস্থিত variable গুলিকে property বা member variable বলা হয়।  
+
+-----------------------------------
+PHP তে magic method গুলো  কি কি ?
+-----------------------------------
+__construct() & __destruct(): নতুন  কোনো object create করলে class এর মধ্যে যে মেথডটি সবার আগে execute হয়, তাকে constructor() method বলে।  কোনো object এর কাজ শেষ হওয়ার পর class এর মধ্যে যে মেথডটি  সবার পর execute হয়, তাকে destructor() method বলে।
+
+__call() & __callStatic(): যখন  কোনো non-exists বা  inaccessible method কে access করার জন্য কল করা  হয় তখন ___call বা  __callStatic method execute হয়  । এখানে non-static method এর জন্য  __call() method এবং  static method এর জন্য __callStatic() method টি execute হয়  । Method গুলো  দুটি parameter accept করে first parameter এ  method নাম এবং second parameter এ argument এর একটি অ্যারে গ্রহণ করে । __call() & __callStatic() method দুটি  method overloading এর  সময় ব্যবহার করা হয়  ।  
+
+__get() & __set(): যখন  কোনো  non-exists বা  inaccessible property টির  value access করার জন্য কল করা হয় তখন __get() method এবং  property টির value set করার জন্য কল করা হয় তখন __set() method execute হয়  । __set() method দুটি parameter accept করে first parameter এ  property এবং second parameter এ property টির value গ্রহণ করে । __get() method শুধুমাত্র  property accept করে ।
+
+__invoke(): যখন একটি object কে একটি ফাংশন হিসাবে বিবেচনা করা হয় তখন  __invoke() method ব্যবহার করা হয়  ।  
+
+Example: 
+------------------------ __construct() & __destruct() -------------
+public function __construct() {
+   echo "Object created!";
+}
+public function __destruct() {
+   echo "Object destroyed!";
+}
+------------------------ __call() & __callStatic() ----------------
+public function __call($name, $arguments) {
+   echo "Calling method $name with arguments: " . implode(', ', $arguments);
+}
+public static function __callStatic($name, $arguments) {
+   echo "Calling static method $name with arguments: " . implode(', ', $arguments);
+}
+------------------------ __get() & __set() ------------------------
+private $data = [];
+public function __get($name) {
+   return $this->data[$name];
+}
+public function __set($name, $value) {
+   $this->data[$name] = $value;
+}
+------------------------ __invoke() -------------------------------
+class MyClass {
+    public function __invoke($param) {
+        echo "Object invoked with parameter: $param";
+    }
+}
+$obj = new MyClass();
+$obj("Hello");
+
+-----------------------------------
+Abstract কি?
+-----------------------------------
+Abstraction কে এনক্যাপসুলেশনের natural extension ভাবা যেতে পারে । অবজেক্ট-ওরিয়েন্টেড ডিজাইনে, প্রোগ্রামগুলি প্রায়শই অত্যন্ত বড় হয় এবং পৃথক object একে অপরের সাথে অনেক communication করতে হয় । সুতরাং  এই রকম বৃহৎ কোডবেস বজায় রাখা কঠিন । Abstraction এর মাধ্যমে বৃহৎ কোডবেস বজায় রাখা সহজ  । Abstraction internal implementation details hide করে এবং শুধুমাত্র প্রয়োজনীয় অপারেশন প্রকাশ করে  । 
+
+1) Abstract class এর  কোনো  object তৈরী করা যায়  না  কিন্তু  inherit করা যায় ।  Inherit করা জন্য extends keyword ব্যবহার করে ।
+
+2) Abstract class এ abstract এবং non-abstract দুই ধরনের method declare করা যায় । Abstract method এ  কোনো body থাকে না ।   
+
+3) Abstract method গুলোকে সমান সংখ্যক parameter সহ child class এ implement করতে হবে ।   
+
+4) Abstract class এ  private declare করা যায় না । 
+
+Example
+-------------
+abstract class AbstractClass{
+    abstract protected function getName($name);
+}
+ 
+class childClass extends AbstractClass{
+    public function getName($name) {
+        return 'Hi '.$name.' !';
+    }
+}
+$class = new childClass;
+echo $class->getName('Rubel'), '\n';
+-----------------------------------
+Interface কি?
+-----------------------------------
+Interface এবং  abstraction ক্লাস similar ।  Interface internal implementation details hide করে এবং শুধুমাত্র প্রয়োজনীয় অপারেশন প্রকাশ করে । 
+
+1) Interface class এর  কোনো  object তৈরী করা যায়  না  কিন্তু  inherit করা যায় ।  Inherit করা জন্য implements keyword ব্যবহার করে ।
+
+2) Interface class এ শুধুমাত্র  abstract method declare করা যায় এবং সবগুলো  method by default abstract method হিসাবে থাকে । 
+
+3) Interface class এর ক্ষেত্রে  child class multiple parent class কে inherit করতে পারে ।  
+
+4) Interface method গুলোকে সমান সংখ্যক parameter সহ child class এ implement করতে হবে ।   
+
+5) Interface class এ  কোনো property থাকে না  এবং   private, protected declare করা যায় না । 
+
+ইন্টারফেস ব্যবহারের কিছু গুরুত্বপূর্ণ কারণ হলো:
+কোড স্ট্রাকচার স্পষ্টতা: ইন্টারফেস মাধ্যমে মেথডগুলোর নির্ধারণ করে ফলে কোডিং স্ট্রাকচার সহজেই বোঝা যায়।
+মাল্টিপল ইনহেরিটেন্স: ইন্টারফেসে ক্লাস মাল্টিপল ইনহেরিটেন্সের সুবিধা দেয়।
+
+Example
+-------------
+interface class MyInterface {
+  public function aMethod();
+  public function anotherMethod();
+}
+
+class MyClass implements MyInterface1,...,MyInterfaceN {
+  public function aMethod() {
+    // (code to implement the method)
+  }
+  public function anotherMethod() {
+    // (code to implement the method)
+  }
+}
+-----------------------------------
+Traits(বৈশিষ্ট্য) কি?
+-----------------------------------
+PHP তে multiple inheritance সাপোর্ট করে না ।  এই সীমাবদ্ধতা দূর করার trait ব্যবহার করা হয়   । Trait user করে multiple inheritance করা যায় . যা PHP 5.4 এ প্রথম ব্যবহার করা হয়। Traits অনেকটা class এর মতোই, Trait কে define করা হয় ক্লাসের মত করেই trait কিওয়ার্ডটি ব্যবহার করে। তবে  class এর মত object তৈরী করা যায় না। কিন্তু একাধিক trait এর property এবং method গুলোকে একটি single class এর মধ্যে ব্যবহার করা যায়। 
+ 
+Note: যদি  trait, parent class এবং child class এ একই নামের function পাওয়া থাকে , তখন প্রথমে child`, তারপর trait, তারপর parent class এর method টি execute হবে । 
+
+class Base{
+     public function sayHello(){
+         echo "say hello from base";
+    }
+}
+trait trt{
+    public function sayHello(){
+        echo "say hellow from trait";
+    }
+}
+class Child extends Base{
+    use trt;
+    public function sayHello(){
+        echo "hello from child class";
+    }
+}
+ 
+$objCls = new Child;
+$objCls->sayHello();
+/////////  Result
+hello from child class 
+
+Traits এর method ওভাররাইডিং  করার  নিয়ম :
+---------------------------------------------
+trait Greeting {
+    public function sayHello() {
+        echo "Hello from Greeting trait!\n";
+    }
+}
+
+trait Farewell {
+    public function sayHello() {
+        echo "Goodbye from Farewell trait!\n";
+    }
+}
+
+class MyClass {
+    use Greeting, Farewell {
+        Greeting::sayHello insteadof Farewell; // Use Greeting::sayHello instead of Farewell::sayHello
+        Farewell::sayHello as sayGoodbye; // Rename Farewell::sayHello to sayGoodbye
+    }
+}
+
+$obj = new MyClass();
+
+$obj->sayHello();    // Output: Hello from Greeting trait!
+$obj->sayGoodbye();  // Output: Goodbye from Farewell trait!
+
+-----------------------------------
+Namespaces (বৈশিষ্ট্য) কি?
+-----------------------------------
+Namespaces হল একটি কনভেনশন (সম্মেলন)যা PHP application এর  class, function, constant ইত্যাদি বিভিন্ন namespace এ define করা যায়, যাতে নামের কনফ্লিক্ট না হয় । অর্থাৎ  Same নামের ক্লাস বা ফাংশনকে বিভিন্ন namespaces এ define করা যায় এবং namespaces ব্যবহার করে element গুলো অ্যাক্সেস করা যায়  । 
+
+// Define a namespace for a set of classes
+namespace MyProject\Math;
+
+class Calculator {
+    public function add($a, $b) {
+        return $a + $b;
+    }
+}
+function multiply($a, $b) {
+    return $a * $b;
+}
+const PI = 3.1416;
+
+// Accessing the class, function, and constant within the namespace
+$calc = new MyProject\Math\Calculator();
+$result1 = $calc->add(5, 3);
+echo $result1; // Output: 8
+
+$result2 = MyProject\Math\multiply(2, 4);
+echo $result2; // Output: 8
+
+echo MyProject\Math\PI; // Output: 3.1416
+
+-----------------------------------
+PHP তে Method Chaining কি?
+-----------------------------------
+ধরি, একটা Class এ  তিন টা মেথড আছে । এখন আমরা যদি এই তিনটি method কে আলাদা আলাদা ভাবে object দিয়ে call না করে একটি object দিয়ে  call করার পদ্ধতিকে Method Chainin বলা হয় ।  
+
+Public method: 
+--------------
+class Person{
+    private $name="";
+    private $age="";
+ 
+    public function setName($name="")
+    {
+      $this->name=$name;
+      return $this;
+    }
+    public function setAge($age="20")
+    {
+      $this->age=$age;
+      return $this;
+    }
+    public function getInfo()
+    {
+      echo "Hello, My name is ".$this->name." and my age is ".$this->age." years.";
+    }
+}
+$person =  new Person();
+$person->setName("Rubel")->setAge(50)->getInfo();
+
+Static method:
+---------------
+class Person{
+    private static $name="";
+    private static $age="";
+ 
+    public static function setName($name="")
+    {
+       static::$name = $name;
+       return new static; 
+    }
+    public static function setAge($age="20")
+    {
+       static::$age= $age;
+      return new static;   
+    }
+    public static function getInfo()
+    {
+      echo "Hello, My name is ".static::$name." and my age is ".static::$age." years.";
+    }
+}
+$person =  new Person();
+$person::setName("Rubel")->setAge(33)->getInfo();
+

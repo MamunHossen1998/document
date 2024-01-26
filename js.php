@@ -12,14 +12,9 @@
     <button type="button" onclick="document.write(7+8)">Click</button>
     <script>
         document.write('I love my country');
-        window.alert(`Bangladesh`)
-        console.log(`Hi`);
-        let x = 10;
-        var y = 5;
-        if (y == 5) {
-            let x = 4;
-        }
-        console.log(Math.pow(x, y));
+        console.log('mamun \"is\"a student');
+        var len = 'Mamun ';
+        console.log(`length ${len.charAt(0)}`);
     </script>
 </body>
 

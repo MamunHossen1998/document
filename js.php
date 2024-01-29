@@ -11,9 +11,12 @@
     <h4>Bangladesh is a small country</h4>
     <button type="button" onclick="document.write(7+8)">Click</button>
     <script>
-        let text1 = "Mamun is a good boy";
-        let txt = text1.indexOf("is");
-        console.log(txt);
+        let text = "i eat rice.i drink  water";
+        const result = text.includes('eat',5);
+        console.log(result);
+        // let len = text.length;
+        // console.log(Array.from(iterator));
+        // console.log(len);
     </script>
 </body>
 

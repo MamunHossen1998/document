@@ -11,9 +11,10 @@
     <h4>Bangladesh is a small country</h4>
     <button type="button" onclick="document.write(7+8)">Click</button>
     <script>
-        let text1 = "Mamun is a good boy";
-        let txt = text1.indexOf("is");
-        console.log(txt);
+        let price = 10;
+        let vat = .25;
+        let html = ` <h2>Price with vat ${(price*(1+vat)).toFixed(2)}</h2>`;
+        document.querySelector("h4").innerHTML = html;
     </script>
 </body>
 

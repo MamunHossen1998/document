@@ -9,13 +9,25 @@
 
 <body>
     <h4>I love my country</h4>
+    <div class="test"></div>
+
     <script>
-        let n1 = "4.20";
-        let n2 = "4";
-        // n1 = Number(n1);
-        let n3 = Number(n1);
-        let n4 = Number(n2);
-        console.log(n3+n4);
+        let students = [
+            ['John', 'Sara', 'Jack']
+        ];
+
+        // using forEach
+        students.forEach(myFunction);
+
+        function myFunction(item) {
+
+             let s = item.forEach(test);
+        }
+
+        function test(value) {
+            console.log(value);
+        }
+        // document.querySelector('.test').innerHTML = text;
     </script>
 </body>
 

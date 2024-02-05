@@ -12,21 +12,13 @@
     <div class="test"></div>
 
     <script>
-        let students = [
-            ['John', 'Sara', 'Jack']
-        ];
+        let name = ['Mamun', 'Hossen', 'Melon', 'Khan'];
+        let afterSplice = name.toSpliced(2, 2, "ena", "ben");
 
-        // using forEach
-        students.forEach(myFunction);
+        console.log(afterSplice);
+        console.log(name);
 
-        function myFunction(item) {
 
-             let s = item.forEach(test);
-        }
-
-        function test(value) {
-            console.log(value);
-        }
         // document.querySelector('.test').innerHTML = text;
     </script>
 </body>

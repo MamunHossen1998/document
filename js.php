@@ -52,7 +52,7 @@
             $('.err').html('');
             let name = $('.fname').val();
             if (name == '') {
-                let err= "please enter the name";
+                let err = "please enter the name";
                 $('.err').html(err);
                 $('#exampleModal').modal('show');
                 return false
@@ -68,10 +68,34 @@
             // $('#test').click();
             // $('#exampleModal').modal('show');
         }
-        let fruits = ["a", "b", "c", "d"];
+        let n = [
+            [9, 4],
+            [3, 4]
+        ];
 
-        fruits.push('e');
-        console.log(fruits);
+
+
+
+        // let custom_arr = n.flatMap(function(x) {
+        //     return x * 2;
+        // });
+        // console.log(n);
+        // console.log(custom_arr);
+        // let custom_att2 = n.map(function(x) {
+        //     return x.map((y) => y * 2);
+        // });
+        let custom = n.flatMap((x) => x.flatMap((y) => y * 2));
+        console.log(custom);
+
+
+
+
+        // for (let index = 0; index < n.length; index++) {
+        //     console.log(n[index]);
+        //     for (let i = 0; i < n[index].length; i++) {
+        //         console.log(n[index][i]);
+        //     }
+        // }
     </script>
 
 

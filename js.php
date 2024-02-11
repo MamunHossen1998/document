@@ -68,24 +68,28 @@
             // $('#test').click();
             // $('#exampleModal').modal('show');
         }
-        let n = [
-            [9, 4],
-            [3, 4]
-        ];
+        let number = ['2', ' 4', '5', ' 6'];
+
+        let result = number.with('2', 'Five');
+        console.log(result);
+        let time = new Date();
+        console.log(time.setFullYear(2024));
+        // console.log(time);
+        // number.forEach(function(x) {
+        //     console.log(x);
+        // })
+        // let text = "";
+        // for (let x of result) {
+        //     console.log(result);
+        //     text += x;
+        // }
+        // console.log(text);
 
 
 
 
-        // let custom_arr = n.flatMap(function(x) {
-        //     return x * 2;
-        // });
-        // console.log(n);
-        // console.log(custom_arr);
-        // let custom_att2 = n.map(function(x) {
-        //     return x.map((y) => y * 2);
-        // });
-        let custom = n.flatMap((x) => x.flatMap((y) => y * 2));
-        console.log(custom);
+
+
 
 
 

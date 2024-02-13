@@ -48,59 +48,26 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
     <script>
-        function check() {
-            $('.err').html('');
-            let name = $('.fname').val();
-            if (name == '') {
-                let err = "please enter the name";
-                $('.err').html(err);
-                $('#exampleModal').modal('show');
-                return false
+        "use strict"
 
-            }
+        function test(a, b, ...c) {
+            console.log(`result ${a} and ${b} and ${c}`);
         }
-        let n1 = 8;
-        let n2 = 5
-        if (n1 != n2) {
-            $('.err').html('');
-            console.log('not equal');
-            $('.err').html('Not equal number');
-            // $('#test').click();
-            // $('#exampleModal').modal('show');
-        }
-        let number = ['2', ' 4', '5', ' 6'];
+        test(2, 3, 4, 5, 6, 7);
+        let arr = [2, 3, 4, 45, 6];
+        let arr1 = [9, 0];
+        let arr3= arr.concat("--",arr1)
+        // arr.push(arr1);
+        console.log(arr3);
+        // let a = [9];
+        // for (let index = 0; index < a.length; index++) {
+        //     arr.push(a[index]);
 
-        let result = number.with('2', 'Five');
-        console.log(result);
-        let time = new Date();
-        console.log(time.setFullYear(2024));
-        // console.log(time);
-        // number.forEach(function(x) {
-        //     console.log(x);
-        // })
-        // let text = "";
-        // for (let x of result) {
-        //     console.log(result);
-        //     text += x;
         // }
-        // console.log(text);
+        // arr.push(arr);
 
-
-
-
-
-
-
-
-
-
-        const person = ['one','two','three'];
-
-        let txt = "";
-        for (let x of person) {
-            console.log(x);
-
-        }
+        // test(2, 3, 4, 5, 6, 7);
+        // console.log(arr);
     </script>
 
 

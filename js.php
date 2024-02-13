@@ -94,12 +94,13 @@
 
 
 
-        // for (let index = 0; index < n.length; index++) {
-        //     console.log(n[index]);
-        //     for (let i = 0; i < n[index].length; i++) {
-        //         console.log(n[index][i]);
-        //     }
-        // }
+        const person = ['one','two','three'];
+
+        let txt = "";
+        for (let x of person) {
+            console.log(x);
+
+        }
     </script>
 
 

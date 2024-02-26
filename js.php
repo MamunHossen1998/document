@@ -50,25 +50,45 @@
     <script>
         "use strict"
 
-        function test(a, b, ...c) {
-            console.log(`result ${a} and ${b} and ${c}`);
+        const promise_one = () => {
+            return new Promise((resolve, reject) => {
+                resolve(`promise one true`);
+            })
         }
-        test(2, 3, 4, 5, 6, 7);
-        let arr = [2, 3, 4, 45, 6];
-        let arr1 = [9, 0];
-        let arr3= arr.concat("--",arr1)
-        // arr.push(arr1);
-        console.log(arr3);
-        // let a = [9];
-        // for (let index = 0; index < a.length; index++) {
-        //     arr.push(a[index]);
+        const promise_two = () => {
+            return new Promise((resolve, reject) => {
+                let a = 2;
+                if (a == 3) {
+                    resolve(`promise two true`);
+                } else {
+                    reject(`promise two rejected`);
+                }
 
-        // }
-        // arr.push(arr);
+            })
+        }
+        const promise_three = () => {
+            return new Promise((resolve, reject) => {
+                resolve(`promise two true`);
+            })
+        }
 
-        // test(2, 3, 4, 5, 6, 7);
-        // console.log(arr);
+        async function callback() {
+            try {
+                let promise1 = await promise_one();
+                console.log(promise1);
+                let promise2 = await promise_two();
+                console.log(promise2);
+                let promise3 = await promise_three();
+                console.log(promise3);
+            }catch (e) {
+                console.log(e);
+            }
+
+
+        }
+        //callback();
     </script>
+    <script src="custom.js"></script>
 
 
     <!-- Button trigger modal -->

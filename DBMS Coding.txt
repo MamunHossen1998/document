@@ -1,0 +1,73 @@
+ডাটাবেসের ল্যাঙ্গুয়েজ গুলো কি কি?
+-------------------------
+৩) ডেটা কন্ট্রোল ল্যাঙ্গুয়েজ (DCL):
+GRANT SELECT, INSERT ON table_name TO user_name;
+REVOKE SELECT, INSERT ON table_name FROM user_name;
+
+৪) ট্রানজ্যাকশন কন্ট্রোল ল্যাংগুয়েজে (TCL):
+!) COMMIT কমান্ডটি ডেটাবেসে করা সব পরিবর্তন স্থায়ী করে। একবার এই কমান্ডটি কার্যকর হলে, ডেটাবেসে করা সব পরিবর্তন সংরক্ষিত হয় এবং ট্রানজ্যাকশনটি সফলভাবে শেষ হয়।
+
+BEGIN;
+UPDATE accounts SET balance = balance - 500 WHERE account_id = 1;
+UPDATE accounts SET balance = balance + 500 WHERE account_id = 2;
+COMMIT;
+
+!!) ROLLBACK কমান্ডটি ডেটাবেসে করা সব পরিবর্তন বাতিল করে এবং ট্রানজ্যাকশন শুরুর পূর্বাবস্থায় নিয়ে যায়। যখন কোন সমস্যা বা ত্রুটি ঘটে, তখন এই কমান্ডটি ব্যবহার করা হয়।
+BEGIN;
+UPDATE accounts SET balance = balance - 500 WHERE account_id = 1;
+UPDATE accounts SET balance = balance + 500 WHERE account_id = 2;
+ROLLBACK;
+
+!!!) SAVEPOINT কমান্ডটি একটি নির্দিষ্ট বিন্দুতে ট্রানজ্যাকশনটি সংরক্ষণ করে। এটি ট্রানজ্যাকশনের মধ্যে একটি পুনরুদ্ধার পয়েন্ট তৈরী করে, যা প্রয়োজনে ROLLBACK কমান্ডের সাথে ব্যবহার করা যেতে পারে।
+
+BEGIN;
+UPDATE accounts SET balance = balance - 500 WHERE account_id = 1;
+SAVEPOINT sp1;
+UPDATE accounts SET balance = balance + 500 WHERE account_id = 2;
+ROLLBACK TO sp1;
+COMMIT;
+
+!v) SET TRANSACTION কমান্ডটি ট্রানজ্যাকশনের বৈশিষ্ট্য নির্ধারণ করতে ব্যবহৃত হয়, যেমন: ইসোলেশন লেভেল, রিড ও রাইট অ্যাক্সেস।
+
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+BEGIN;
+-- ট্রানজ্যাকশনাল কোড
+COMMIT;
+
+
+
+ডাটাবেস স্কিমার কি ?
+---------------------------------
+লজিক্যাল স্কিমা: 
+CREATE TABLE Student (
+    StudentID INT PRIMARY KEY,
+    Name VARCHAR(100),
+    Age INT
+);
+
+CREATE TABLE Course (
+    CourseID INT PRIMARY KEY,
+    CourseName VARCHAR(100),
+    Credits INT
+);
+
+CREATE TABLE Enrollment (
+    StudentID INT,
+    CourseID INT,
+    EnrollmentDate DATE,
+    PRIMARY KEY (StudentID, CourseID),
+    FOREIGN KEY (StudentID) REFERENCES Student(StudentID),
+    FOREIGN KEY (CourseID) REFERENCES Course(CourseID)
+);
+
+
+
+
+
+
+
+
+
+
+
+

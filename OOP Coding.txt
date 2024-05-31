@@ -63,6 +63,9 @@ function updateCounter() {
     global $counter;
     $counter++;
 }
+updateCounter();
+
+echo $counter;
 
 ---------------------------------
 অবজেক্ট  কি ? 
@@ -175,28 +178,27 @@ $employee->makeSound();
 -----------------------------------
 Method Overloading: -------------
 class Calculator {
-    // Magic method for method overloading
     public function __call($name, $arguments) {
         if ($name === 'multiply') {
             if (count($arguments) === 2) {
                 return $this->multiplyTwo($arguments[0], $arguments[1]);
-            } elseif (count($arguments) === 3) {
+            } 
+	    elseif (count($arguments) === 3) {
                 return $this->multiplyThree($arguments[0], $arguments[1], $arguments[2]);
             }
         }
         throw new \BadMethodCallException("Method '$name' not found.");
     }
-
-    function multiplyTwo(){
-    }	 
-    function multiplyThree(){
-    
+    private function multiplyTwo($x, $y) {
+        return $x * $y;
     }
-
-
+    private function multiplyThree($x, $y, $z) {
+        return $x * $y * $z;
+    }
 }
 $calculator = new Calculator();
-echo $calculator->add(5, 3) . PHP_EOL;            // Output: 8
+
+echo $calculator->add(5, 3) . PHP_EOL; // This will throw an exception because there's no 'add' method
 echo $calculator->multiply(2, 3) . PHP_EOL;       // Output: 6
 echo $calculator->multiply(2, 3, 4) . PHP_EOL;    // Output: 24
 
@@ -270,38 +272,80 @@ class MyClass {
 -----------------------------------
 PHP তে ম্যাজিক মেথড গুলো  কি কি ?
 -----------------------------------
-------- __construct() & __destruct() 
-public function __construct() {
-   echo "Object created!";
-}
-public function __destruct() {
-   echo "Object destroyed!";
-}
-------- __call() & __callStatic()  
-public function __call($name, $arguments) {
-   echo "Calling method $name with arguments: " . implode(', ', $arguments);
-}
-public static function __callStatic($name, $arguments) {
-   echo "Calling static method $name with arguments: " . implode(', ', $arguments);
-}
-------- __get() & __set()  
-class MyClass{
+---------------- __construct() & __destruct() 
+class MyClass {
+  public function __construct() {
+    echo "Object created!\n";
+  }
 
-private $data = [];
-public function __get($name) {
-   return $this->data[$name];
-}
-public function __set($name, $value) {
-   $this->data[$name] = $value;
-}
+  public function sayHello() {
+    echo "Hello from MyClass!\n";
+  }
+
+  public function __destruct() {
+    echo "Object destroyed!\n";
+  }
 }
 
-$class = new MyClass()
-$class->name = "Mamun";
+$myObject = new MyClass();
+$myObject->sayHello();
 
-echo $class->name;
+unset($myObject); // This will trigger the __destruct() method
 
-------- __invoke() 
+---------------- __call() & __callStatic()  
+class Calculator {
+    public function __call($name, $arguments) {
+        if ($name === 'multiply') {
+            if (count($arguments) === 2) {
+                return $this->multiplyTwo($arguments[0], $arguments[1]);
+            } 
+	    elseif (count($arguments) === 3) {
+                return $this->multiplyThree($arguments[0], $arguments[1], $arguments[2]);
+            }
+        }
+        throw new \BadMethodCallException("Method '$name' not found.");
+    }
+    private function multiplyTwo($x, $y) {
+        return $x * $y;
+    }
+    private function multiplyThree($x, $y, $z) {
+        return $x * $y * $z;
+    }
+}
+$calculator = new Calculator();
+
+echo $calculator->add(5, 3) . PHP_EOL; // This will throw an exception because there's no 'add' method
+echo $calculator->multiply(2, 3) . PHP_EOL;       // Output: 6
+echo $calculator->multiply(2, 3, 4) . PHP_EOL;    // Output: 24
+
+---------------- __get() & __set()  
+class DataHolder {
+  private $data = [];
+
+  public function __get($name) {
+    if (array_key_exists($name, $this->data)) {
+      return $this->data[$name];
+    } 
+    else {
+      throw new Exception("Property '$name' does not exist");
+    }
+  }
+  public function __set($name, $value) {
+    $this->data[$name] = $value;
+  }
+}
+
+$dataHolder = new DataHolder();
+$dataHolder->name = "John Doe";
+$dataHolder->age = 30;
+
+echo "Name: " . $dataHolder->name; 
+echo "Age: " . $dataHolder->age;   
+
+// Accessing non-existent property
+echo "City: " . $dataHolder->city; // throws exception
+
+---------------- __invoke() 
 class MyClass {
     public function __invoke($param) {
         echo "Object invoked with parameter: $param";
@@ -373,7 +417,7 @@ function multiply($a, $b) {
 }
 const PI = 3.1416;
 
-// Accessing the class, function, and constant within the namespace
+
 $calc = new MyProject\Math\Calculator();
 $result1 = $calc->add(5, 3);
 echo $result1; // Output: 8
@@ -551,7 +595,7 @@ $userController = new UserController($database);
 $users = $userController->getAllUsers();
 print_r($users);
 
-এই উদাহরণে, Database ক্লাস নির্দিষ্টভাবে MySQLডাটাবেসের সাথে সংযোগ স্থাপনের জন্য ডিজাইন করা হয়েছে । UserRepository ক্লাস Database ক্লাসের উপর নির্ভর করে। এটি OCP লঙ্ঘন করে কারণ Database ক্লাসের ইন্টারফেস পরিবর্তন করলে UserRepository ক্লাস পরিবর্তন করতে হবে কারণ এটি Database ক্লাসের মেথড ব্যবহার করেছে ।
+এই উদাহরণে, Database ক্লাস নির্দিষ্টভাবে MySQLডাটাবেসের সাথে সংযোগ স্থাপনের জন্য ডিজাইন করা হয়েছে ।  এটি OCP লঙ্ঘন করে কারণ যদি অন্য ডাটাবেস কনন্টেক্ট করার দরকার হয় তখন Database ক্লাসের ইন্টারফেস পরিবর্তন করতে হবে ।
 
 OCP অনুসরণ করে: -------------
 interface Database {
@@ -566,6 +610,13 @@ class MySQLDatabase implements Database {
     public function query($sql) { MySQL ডাটাবেসে SQL ক্যোয়ারি চালান }
     public function fetchAll() { MySQL ডাটাবেস থেকে রোডসেট ফেচ }
 }
+class PostgreSQLDatabase implements Database {
+    private $connection;
+
+    public function connect() { PostgreSQL ডাটাবেসের সাথে সংযোগ স্থাপন }
+    public function query($sql) { PostgreSQL ডাটাবেসে SQL ক্যোয়ারি চালান }
+    public function fetchAll() { PostgreSQL ডাটাবেস থেকে রোডসেট ফেচ }
+}
 class UserController {
     private $db;
 
@@ -577,7 +628,6 @@ class UserController {
         return $this->db->fetchAll($result);
     }
 }
-
 $mysqlDatabase = new MySQLDatabase();
 $mysqlDatabase->connect(); 
  
@@ -585,118 +635,162 @@ $userController = new UserController($mysqlDatabase);
 $users = $userController->getAllUsers();
 print_r($users);
 
+
 ৩) Liskov Substitution Principle:
 
+LSP অনুসরণ না করে: ---------- 
+class Animal {
+    public function jump() {
+        // code for jumping
+    }
+}
+class Elephant extends Animal {
+    public function jump() {
+        // Elephant can't jump
+    }
+}
+
+LSP অনুসরণ  করে: ---------- 
+abstract class Animal {
+    abstract public function eat();
+}
+class Elephant extends Animal {
+    public function eat() {
+        // every animal can eat
+    }
+}
+class Tiger extends Animal {
+    public function eat() {
+        // every animal can eat
+    }
+}
 
 ৪) Interface Segregation Principle (ISP):
 
 ISP অনুসরণ না করে: ---------- 
-interface DatabaseConnection {
-    public function connect();
-    public function query($sql);
-    public function fetchAll();
-    public function createUser($username, $password); // ISP লঙ্ঘন!
-    public function getProduct($productId); // ISP লঙ্ঘন!
-}
-class MySQLDatabase implements DatabaseConnection {
-    private $connection;
-
-    public function connect() { MySQL ডাটাবেসের সাথে সংযোগ স্থাপন }
-    public function query($sql) { MySQL ডাটাবেসে SQL ক্যোয়ারি চালান }
-    public function fetchAll() { MySQL ডাটাবেস থেকে রোডসেট ফেচ }
-    public function createUser($username, $password) {} // ISP লঙ্ঘন!
-    public function getProduct($productId) {} // ISP লঙ্ঘন!
-}
-class UserController {
-    private $database;
-
-    public function __construct(DatabaseConnection $database) {
-        $this->database = $database;
-    }
-    public function createUser($username, $password) {
-        $sql = "INSERT INTO users (username, password) VALUES (:username, :password)";
-        $stmt = $this->database->query($sql);
-        $stmt->bindParam(':username', $username);
-        $stmt->bindParam(':password', $password);
-        $stmt->execute();
-    }
-}
-class ProductRepository {
-    private $database;
-
-    public function __construct(DatabaseConnection $database) {
-        $this->database = $database;
-    }
-    public function getProduct($productId) {
-        $sql = "SELECT * FROM products WHERE id = :productId";
-        $stmt = $this->database->query($sql);
-        $stmt->bindParam(':productId', $productId);
-        $stmt->execute();
-        return $stmt->fetch();
-    }
+interface Human {
+    public function walk();
+    public function swim(); // not everyone can swim
 }
 
-$mysqlDatabase = new MySQLDatabase();
+ISP অনুসরণ  করে: ---------- 
+interface Walkable {
+    public function walk();
+}
 
-$userRepository = new UserRepository($mysqlDatabase);
-$userRepository->createUser('johndoe', 'password123');
+interface Swimmable {
+    public function swim();
+}
 
-$productRepository = new ProductRepository($postgresqlDatabase);
-$product = $productRepository->getProduct(123);
+class People implements Walkable, Swimmable {
+    public function walk() {
+	// walking
+    }
+    public function swim() {
+	// swimming
+    }
+}
 
 ৫) Dependency Inversion Principle (DIP):
 
 DIP অনুসরণ না করে: ---------- 
-class CsvParser {
-    public function parse($filename) {
-        $file = new SplFileObject($filename);
-        $data = [];
+class Book {
+    private $content;
 
-        foreach ($file as $row) {
-            $data[] = array_map('trim', explode(',', $row[0]));
-        }
+    public function __construct($content) {
+        $this->content = $content;
+    }
+    public function getContent() {
+        return $this->content;
+    }
+}
+class Article {
+    private $content;
 
-        return $data;
+    public function __construct($content) {
+        $this->content = $content;
+    }
+    public function getContent() {
+        return $this->content;
+    }
+}
+class Printer {
+    public function printContent(Book $book) {
+        $content = $book->getContent();
+        echo "Printing book content: " . $content . "\n";
+    }
+    public function printArticleContent(Article $article) {
+        $content = $article->getContent();
+        echo "Printing article content: " . $content . "\n";
     }
 }
 
-$csvParser = new CsvParser();
-$data = $csvParser->parse('data.csv');
-
-এই উদাহরণে, এই কোডটি CSV ফাইল পার্স করার জন্য SplFileObject ক্লাসের উপর নির্ভর করে।
-যদি ভবিষ্যতে আমরা অন্য কোনো ফরম্যাটের ফাইল (যেমন JSON) পার্স করতে চাই, তাহলে আমাদের CsvParser ক্লাসটি পরিবর্তন করতে হবে।
+এই উদাহরণে, Printer ক্লাস নির্দিষ্ট ক্লাস (Book, Article) উপর নির্ভর করে: printContent() এবং printArticleContent() মেথড নির্দিষ্টভাবে Book এবং Article ক্লাসের উপর নির্ভর করে। এর মানে হল যে Printer ক্লাস কেবলমাত্র এই দুটি ক্লাসের সাথেই কাজ করতে পারে ।
 
 DIP অনুসরণ করে: ---------- 
-interface FileParser {
-    public function parse($filename);
+interface Printable {
+    public function getContent(): string;
 }
+class Book implements Printable {
+    private $content;
 
-class CsvParser implements FileParser {
-    public function parse($filename) {
-        $file = new SplFileObject($filename);
-        $data = [];
+    public function __construct($content) {
+        $this->content = $content;
+    }
+    public function getContent(): string {
+        return $this->content;
+    }
+}
+class Article implements Printable {
+    private $content;
 
-        foreach ($file as $row) {
-            $data[] = array_map('trim', explode(',', $row[0]));
-        }
+    public function __construct($content) {
+        $this->content = $content;
+    }
+    public function getContent(): string {
+        return $this->content;
+    }
+}
+class Printer {
+    public function printContent(Printable $printable) {
+        $content = $printable->getContent();
+        echo "Printing content: " . $content . "\n";
+    }
+}
+$book = new Book("This is the book content");
+$article = new Article("This is the article content");
 
-        return $data;
+$printer = new Printer();
+$printer->printContent($book);
+$printer->printContent($article);
+
+এই উদাহরণে, Printer ক্লাস নির্দিষ্ট  ক্লাসের উপর নির্ভর করে না: এটি Printable ইন্টারফেসের উপর নির্ভর করে। Book এবং Article ক্লাসগুলো Printable ইন্টারফেস implement করে: এর মানে হল যে তারা "printContent" মেথড ব্যবহার করে যেকোনো Printer ক্লাসের সাথে কাজ করতে পারে। Printer ক্লাস পরিবর্তন করা সহজ: এটি  Book এবং Article ক্লাসের পরিবর্তন করার প্রয়োজন হয় না।
+
+লোয়ার লেভেল ক্লাস: ---------- EmailService
+হায়ার লেভেল ক্লাস: ----------  UserService
+
+class EmailService {
+    public function sendEmail($email, $message) {
+       	 // ইমেইল পাঠানোর লজিক
+        echo "Email sent to $email with message: $message";
+    }
+}
+class UserService {
+    private $emailService;
+
+    public function __construct() {
+        $this->emailService = new EmailService(); // সরাসরি নির্ভরশীলতা
+    }
+
+    public function registerUser($email) {
+       	 // ইউজার রেজিস্ট্রেশনের লজিক
+        $this->emailService->sendEmail($email, "Welcome to our platform!");
     }
 }
 
-class JsonParser implements FileParser {
-    public function parse($filename) {
-        // ... (JSON ফাইল পার্স করার কোড)
-    }
-}
-
-$fileParser = new CsvParser();
-$data = $fileParser->parse('data.csv');
-
-উন্নত সংস্করণে সুবিধা: ---------- 
-FileParser ইন্টারফেস ব্যবহার করা হয়েছে, যা CsvParser এবং JsonParser ক্লাসগুলো দ্বারা বাস্তবায়িত হয়েছে।
-এখন আমরা যেকোনো ফাইল পার্সার ব্যবহার করতে পারি, শুধুমাত্র $fileParser ভেরিয়েবলের মান পরিবর্তন করে।
-CsvParser ক্লাসটি পরিবর্তন করার প্রয়োজন নেই যদি আমরা ভবিষ্যতে অন্য কোনো ফরম্যাটের ফাইল পার্স করতে চাই।
+// ইউজার রেজিস্ট্রেশন
+$userService = new UserService();
+$userService->registerUser('user@example.com');
 
 ------------------------------------
 PHP OOP ডিজাইন প্যাটার্ন  কোডিং উদাহরণ ? 

@@ -1,0 +1,4 @@
+
+Monokai Pro
+Vetur
+ -vs code extension

@@ -1,4 +1,9 @@
-
 Monokai Pro
 Vetur
  -vs code extension
+axios - axios hocce http request patanor akta way
+axios install
+---------------
+npm install axios --save
+
+globallay kono kisu declare korle seta main.js a korte hoy					
